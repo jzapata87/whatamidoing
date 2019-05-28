@@ -17,6 +17,7 @@ myMap.set("Center", {latitude: 30.240006, longitude: -97.720439});
 function App() {
   return (
 <div className="listUsers">
+    <p>Test update</p>
     {numberOfUsers.map(item => <User key={`user${item}`} usernumber={item}/>)}
     <AltMap
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAIFqYRABatpGZdmVjjg4CJzKnQy86OFsg&v=3.exp&libraries=geometry,drawing,places`}
