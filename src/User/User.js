@@ -78,8 +78,10 @@ class User extends React.Component {
       .receive("error", resp => { console.log("error", resp) })
   }
 
+  //phoenixmaybackend.com/socket
+
   componentDidMount() {
-    const socket = new Socket("//phoenixmaybackend.com/socket", {
+    const socket = new Socket("ws://127.0.0.1:4000/socket", {
     params: {user_id: `user #${this.props.usernumber}`}
     });
     this.setState({socket})
@@ -107,9 +109,9 @@ class User extends React.Component {
         <ShowSimilarUsers users={this.state.presenceState}/>
         <hr/>
         <h5>Show my location</h5>
-        <button onClick={this.sendGps}>
+        {this.state.channel && <button onClick={this.sendGps}>
           Send GPS
-        </button>
+        </button>}
       </div>
     );
   }

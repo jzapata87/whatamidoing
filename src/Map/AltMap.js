@@ -32,23 +32,30 @@ class MapWithMarker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      places: this.props.places
+      places: this.props.places,
+      channel: null,
+      nearest: null
     }; //initialize initial state from props
+    this.getNearestPoint = this.getNearestPoint.bind(this);
   }
 
+  // /phoenixmaybackend.com/socket
   componentDidMount() {
     const { places } = this.props
     var map = new Map(places);
-    const socket = new Socket("//phoenixmaybackend.com/socket", {
+    const socket = new Socket("ws://127.0.0.1:4000/socket", {
     params: {user_id: "gpsmap"}
     });
     const channel = socket.channel("water_cooler:gps");
+
     socket.connect();
     channel.join()
       .receive("ok", resp => {
         console.log("Joined successfully ", resp)
       })
       .receive("error", resp => { console.log("Unable to join", resp) })
+
+    this.setState({channel: channel})
 
     channel.on("gps", payload => {
       map.set(payload.user,payload.data)
@@ -58,13 +65,28 @@ class MapWithMarker extends React.Component {
     })
   }
 
+  getNearestPoint() {
+    this.state.channel.push("nearest")
+      .receive("ok", resp => {
+        console.log("this is the nearest response ", resp)
+        this.setState({nearest: resp.response[1][0][0]})
+      })
+      .receive("error", resp => { console.log("error nearest ", resp) })
+  }
+
   render() {
     return (
+      <>
       <GMap
         center={this.props.center}
         zoom={this.props.zoom}
         places={this.state.places}
       />
+      <button onClick={this.getNearestPoint}>
+        GetNearestPoint
+      </button>
+      {this.state.nearest && <h3>The nearest point(user) is: user:{this.state.nearest}</h3>}
+    </>
     );
   }
 }
