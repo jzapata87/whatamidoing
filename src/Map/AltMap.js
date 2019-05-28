@@ -68,7 +68,7 @@ class MapWithMarker extends React.Component {
   getNearestPoint() {
     this.state.channel.push("nearest")
       .receive("ok", resp => {
-        console.log("this is the nearest response ", resp)
+        //console.log("this is the nearest response ", resp)
         this.setState({nearest: resp.response[1][0][0]})
       })
       .receive("error", resp => { console.log("error nearest ", resp) })

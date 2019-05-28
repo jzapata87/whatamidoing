@@ -35,7 +35,7 @@ class User extends React.Component {
     this.setState({channel: channel})
     socket.connect();
     channel.join().receive("ok", resp => {
-      console.log("Joined successfully????" + this.props.usernumber, resp)
+      //console.log("Joined successfully????" + this.props.usernumber, resp)
       })
       .receive("error", resp => { console.log("Unable to join", this.props.usernumber, resp) })
 
@@ -73,7 +73,7 @@ class User extends React.Component {
   message(data) {
     this.state.channel.push("shout", {data, user: this.props.usernumber})
       .receive("ok", resp => {
-        console.log(resp.response, " this is the response")
+        //console.log(resp.response, " this is the response")
       })
       .receive("error", resp => { console.log("error", resp) })
   }
