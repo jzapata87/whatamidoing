@@ -81,7 +81,7 @@ class User extends React.Component {
   //phoenixmaybackend.com/socket
 
   componentDidMount() {
-    const socket = new Socket("ws://127.0.0.1:4000/socket", {
+    const socket = new Socket("//phoenixmaybackend.com/socket", {
     params: {user_id: `user #${this.props.usernumber}`}
     });
     this.setState({socket})

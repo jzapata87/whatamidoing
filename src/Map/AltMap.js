@@ -43,7 +43,7 @@ class MapWithMarker extends React.Component {
   componentDidMount() {
     const { places } = this.props
     var map = new Map(places);
-    const socket = new Socket("ws://127.0.0.1:4000/socket", {
+    const socket = new Socket("//phoenixmaybackend.com/socket", {
     params: {user_id: "gpsmap"}
     });
     const channel = socket.channel("water_cooler:gps");
